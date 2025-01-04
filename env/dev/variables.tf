@@ -127,3 +127,9 @@ variable "volume_size" {
   description = "Root block device size of EC2"
   default     = 100
 }
+
+variable "key_algorithm" {
+  description = "Key Pair Algorithm"
+  type        = string
+  default     = "RSA"
+}

@@ -93,6 +93,7 @@ module "ec2" {
   instance_type     = var.instance_type
   volume_type       = var.volume_type
   volume_size       = var.volume_size
+  key_algorithm = var.key_algorithm
 }
 
 ##ALB

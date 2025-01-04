@@ -41,3 +41,9 @@ output "alb_http_sg_id" {
 output "instance_ids" {
   value = module.ec2.instance_ids
 }
+
+##Key Pair Private Key
+output "aws_key_pair_private_key" {
+  value = module.ec2.aws_key_pair_private_key
+  sensitive = true
+}
