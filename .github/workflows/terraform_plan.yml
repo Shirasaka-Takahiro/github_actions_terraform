@@ -37,19 +37,9 @@
           - name: Checkout
             uses: actions/checkout@v4
     
-    # .terraform-version で定義しているTerraformバージョンを取得 ②
-          - name: Get Terraform version
-            id: terraform-version
-            uses: bigwheel/get-terraform-version-action@v1.2.0
-            with:
-              path: ${{ matrix.directory }}
-    
-    # .terraform-version で定義しているTerraformバージョンでinit ②
           - name: Setup Terraform
             uses: hashicorp/setup-terraform@v3
-            with:
-              terraform_version: ${{ steps.terraform-version.outputs.terraform-version }}
-    
+
           - name: Setup AWS Credentials
             uses: aws-actions/configure-aws-credentials@v4
             with:
