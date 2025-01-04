@@ -17,8 +17,8 @@
       pull-requests: write
     
     env:
-      ROLE_TO_ASSUME: arn:aws:iam::482122962623:role/terraform_github_actions_role
-      AWS_REGION: ap-northeast-1
+      ROLE_TO_ASSUME: ${{secrets.ROLE_TO_ASSUME}}
+      AWS_REGION: ${{secrets.AWS_REGION}}
     
     jobs:
       terraform:
