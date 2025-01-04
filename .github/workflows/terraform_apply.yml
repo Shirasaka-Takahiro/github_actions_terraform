@@ -63,6 +63,10 @@ jobs:
             exit 1
           fi
 
+      - name: Terraform Init
+        id: init
+        run: terraform init
+
       - name: Terraform Apply
         id: apply
         working-directory: ${{ matrix.directory }}
