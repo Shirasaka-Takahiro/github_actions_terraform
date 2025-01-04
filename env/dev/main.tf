@@ -1,6 +1,6 @@
 ##Provider for ap-northeast-1
 provider "aws" {
-  profile    = "terraform-user"
+  #profile    = "terraform-user"
   #access_key = var.access_key
   #secret_key = var.secret_key
   region     = "ap-northeast-1"
