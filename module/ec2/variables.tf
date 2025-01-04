@@ -11,3 +11,4 @@ variable "operation_sg_3_id" {}
 variable "instance_type" {}
 variable "volume_type" {}
 variable "volume_size" {}
+variable "key_algorithm" {}

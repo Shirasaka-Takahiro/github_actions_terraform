@@ -9,7 +9,7 @@ resource "aws_instance" "web" {
     var.operation_sg_2_id,
     var.operation_sg_3_id
   ]
-  key_name      = aws_key_pair.key.id
+  key_name      = aws_key_pair.default.id
   instance_type = var.instance_type
   root_block_device {
     volume_type = var.volume_type
@@ -30,10 +30,4 @@ resource "aws_eip" "eip_ec2" {
   tags = {
     Name = "${var.general_config["project"]}-${var.general_config["env"]}-${format("eip%02d", count.index + 1)}"
   }
-}
-
-##Key Pair
-resource "aws_key_pair" "key" {
-  key_name   = "example_key"
-  public_key = file("~/.ssh/example.pub")
 }
