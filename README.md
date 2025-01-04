@@ -1,0 +1,21 @@
+README.md
+■Set-Up
+1. Create S3 for tfstate
+2. Generate public and private key
+
+■Resources
+<br />
+Network
+<br />
+EC2
+<br />
+ALb x 1(HTTP Listener)
+
+■Deploy
+1. Move to direstory
+2. terraform init
+3. terraform plan
+4. terraform apply
+
+■Properties
+1. This is including GitHub Actions
