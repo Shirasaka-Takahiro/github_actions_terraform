@@ -19,3 +19,4 @@ ALb x 1(HTTP Listener)
 
 ■Properties
 1. This is including GitHub Actions
+2. GitHub Actions will be executing when marging dev branch into main one
