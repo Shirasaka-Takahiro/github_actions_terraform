@@ -1,0 +1,80 @@
+---
+name: "Workflow Terraform Apply"
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+  workflow_dispatch:
+
+  workflow_call:
+    inputs:
+      TF_VERSION:
+        type: string
+        required: true
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+
+env:
+  ROLE_TO_ASSUME: ${{secrets.ROLE_TO_ASSUME}}
+  AWS_REGION: ${{secrets.AWS_REGION}}
+
+jobs:
+  terraform:
+    name: "Terraform Directory Checks"
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
+    strategy:
+      matrix:
+        directory:
+          [
+            ./env/dev/
+          ]
+    defaults:
+      run:
+        working-directory: ${{ matrix.directory }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Setup AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.ROLE_TO_ASSUME }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Check if directory is not empty
+        id: check
+        run: |
+          if [ "$(ls -A .)" ]; then
+            echo "Directory is not empty"
+          else
+            echo "Directory is empty"
+            exit 1
+          fi
+
+      - name: Terraform Apply
+        id: apply
+        working-directory: ${{ matrix.directory }}
+        run: |
+          terraform apply -auto-approve -no-color
+
+      - name: truncate terraform apply result
+        run: |
+          apply=$(cat <<'EOF'
+          ${{ format('{0}{1}', steps.apply.outputs.stdout, steps.apply.outputs.stderr) }}
+          EOF
+          )
+          echo "PLAN<<EOF" >> $GITHUB_ENV
+          echo "${apply}" | grep -v 'Refreshing state' | tail -c 65000 >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
