@@ -22,7 +22,6 @@ jobs:
   terraform:
     name: "Terraform Directory Checks"
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == true
     strategy:
       matrix:
         directory:
