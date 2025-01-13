@@ -1,5 +1,5 @@
 ---
-name: "Workflow Terraform Apply"
+name: "Workflow Terraform Destroy"
 on:
   workflow_dispatch:
 
@@ -62,18 +62,18 @@ jobs:
         id: init
         run: terraform init
 
-      - name: Terraform Apply
-        id: apply
+      - name: Terraform Destroy
+        id: destroy
         working-directory: ${{ matrix.directory }}
         run: |
-          terraform apply -auto-approve -no-color
+          terraform destroy -auto-approve -no-color
 
-      - name: truncate terraform apply result
+      - name: truncate terraform destroy result
         run: |
-          apply=$(cat <<'EOF'
-          ${{ format('{0}{1}', steps.apply.outputs.stdout, steps.apply.outputs.stderr) }}
+          destroy=$(cat <<'EOF'
+          ${{ format('{0}{1}', steps.destroy.outputs.stdout, steps.destroy.outputs.stderr) }}
           EOF
           )
-          echo "APPLY<<EOF" >> $GITHUB_ENV
-          echo "${apply}" | grep -v 'Refreshing state' | tail -c 65000 >> $GITHUB_ENV
+          echo "DESTROY<<EOF" >> $GITHUB_ENV
+          echo "${destroy}" | grep -v 'Refreshing state' | tail -c 65000 >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
