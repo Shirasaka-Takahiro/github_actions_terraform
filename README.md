@@ -21,3 +21,4 @@ ALb x 1(HTTP Listener)
 1. This is including GitHub Actions
 2. terraform plan will be executing when marging dev branch into main one by using GitHub Actions
 3. terraform apply will be executing when marging dev branch into main one by using GitHub Actions
+4. Run workflow manually on the page of Github Actions

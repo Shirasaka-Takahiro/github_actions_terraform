@@ -1,11 +1,6 @@
 ---
 name: "Workflow Terraform Apply"
 on:
-  pull_request:
-    branches:
-      - main
-    types:
-      - closed
   workflow_dispatch:
 
   workflow_call:
